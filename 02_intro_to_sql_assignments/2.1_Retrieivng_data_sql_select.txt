@@ -1,0 +1,16 @@
+1->Determine the structure of the DEPT table     SQL*Plus Command
+
+DESC DEPT;
+SELECT * FROM DEPT;
+
+
+2->Display the contents of the DEPT table.
+
+DESC EMP;
+SELECT * FROM EMP;
+
+3->Display the Ename and Deptno from Emp table whose Empno is 7788. use select statement
+
+SELECT ENAME, DEPTNO
+FROM EMP
+WHERE EMPNO = 7788;

@@ -1,0 +1,104 @@
+1-
+SELECT SYSDATE AS "Date"
+FROM DUAL;
+
+2-
+SELECT EMPNO,ENAME,SAL,
+ROUND(SAL * 1.155) AS "New Salary"
+FROM EMP;
+
+3-
+SELECT EMPNO, ENAME, SAL,
+ROUND(SAL * 1.155) AS "New Salary",
+ROUND(SAL * 1.155) - SAL AS "Increase"
+FROM EMP;
+
+4-
+SELECT INITCAP(ENAME) AS "Employee Name",
+LENGTH(ENAME) AS "Name Length"
+FROM EMP
+WHERE ENAME LIKE 'J%'
+OR ENAME LIKE 'A%'
+OR ENAME LIKE 'M%'
+ORDER BY ENAME;
+
+5-
+SELECT INITCAP(ENAME) AS "Employee Name",
+LENGTH(ENAME) AS "Name Length"
+FROM EMP
+WHERE ENAME LIKE UPPER('&LETTER') || '%'
+ORDER BY ENAME;
+
+6-
+SELECT INITCAP(ENAME) AS "Employee Name",
+       LENGTH(ENAME) AS "Name Length"
+FROM EMP
+WHERE ENAME LIKE UPPER('&LETTER') || '%'
+ORDER BY ENAME;
+
+7-
+SELECT ENAME,
+       CEIL(MONTHS_BETWEEN(SYSDATE, HIREDATE)) AS "MONTHS WORKED"
+FROM EMP
+ORDER BY "MONTHS WORKED";
+
+8->
+SELECT ENAME || ' earns ' || SAL ||
+       ' monthly but wants ' || (SAL * 3) AS "Dream Salaries"
+FROM EMP;
+
+9-
+SELECT ENAME,
+       LPAD(SAL, 15, '$') AS "SALARY"
+FROM EMP;
+
+10->
+SELECT ENAME,
+       TO_CHAR(HIREDATE, 'fmDay, "the" DDSPTH "of" Month, YYYY') AS "Hire Date",
+       TO_CHAR(NEXT_DAY(ADD_MONTHS(HIREDATE, 6), 'MONDAY'),
+               'fmDay, "the" DDSPTH "of" Month, YYYY') AS "REVIEW"
+FROM EMP;
+
+
+11-
+SELECT ENAME, NVL(TO_CHAR(COMM), 'No Commission') AS "COMM"
+FROM EMP;
+
+12-
+SELECT SUBSTR(ENAME, 1, 8) || ' ' ||
+RPAD('*', TRUNC(SAL / 1000), '*') AS "EMPLOYEES_AND_THEIR_SALARIES"
+FROM EMP
+ORDER BY SAL DESC;
+
+
+13-
+SELECT ENAME,
+       JOB,
+       DECODE(JOB,
+              'PRESIDENT', 'A',
+              'MANAGER', 'B',
+              'SALESMAN', 'C',
+              'CLERK', 'D',
+              'No Grade') AS GRADE
+FROM EMP;
+
+14-
+SELECT ENAME,
+       JOB,
+       CASE
+           WHEN JOB = 'PRESIDENT' THEN 'A'
+           WHEN JOB = 'MANAGER'   THEN 'B'
+           WHEN JOB = 'SALESMAN'  THEN 'C'
+           WHEN JOB = 'CLERK'     THEN 'D'
+           ELSE 'No Grade'
+       END AS GRADE
+FROM EMP;
+
+
+
+
+
+
+
+
+
