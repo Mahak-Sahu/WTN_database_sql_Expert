@@ -1,0 +1,121 @@
+1.-> given EMPLOYEE table as below and suggest if this table can be further Normalized EMPNO, ENAME, SAL, DEPTNO, DNAME, LOC,Explain what normal form this table is and how you can make this into next normal form
+
+
+
+The table is in Second Normal Form (2NF) and also satisfies Third Normal Form (3NF)
+there is a transitive dependency:
+
+EMPNO → DEPTNO
+DEPTNO → DNAME,LOC
+
+EMPNO → DNAME, LOC indirectly.
+
+**Normalize the Table**
+
+
+CREATE TABLE DEPARTMENT (
+    DEPTNO INT PRIMARY KEY,
+    DNAME VARCHAR(50),
+    LOC VARCHAR(50)
+);
+
+CREATE TABLE EMPLOYEE (
+    EMPNO INT PRIMARY KEY,
+    ENAME VARCHAR(50),
+    SAL DECIMAL(10,2),
+    DEPTNO INT,
+    FOREIGN KEY (DEPTNO) REFERENCES DEPARTMENT(DEPTNO)
+);
+
+
+To remove the transitive dependency, split the table into two tables.
+
+-EMPLOYEE Table
+EMPNO	ENAME	SAL	DEPTNO
+
+Primary Key: EMPNO
+Foreign Key: DEPTNO
+
+-DEPARTMENT Table
+DEPTNO	DNAME	LOC
+
+
+The database is now in Third Normal Form (3NF)
+
+--------------------------------------------------------------------------------------
+
+2->
+
+THE TABLE IS IN 1 NF because
+Each column contains atomic (single) values
+There are no repeating groups within a single row
+
+if a student appears for multiple exams, the key becomes (ROLLNO, EXAM)
+This is a partial dependency, so the table is not in Second Normal Form (2NF)
+
+**Normalize the table**
+
+-- STUDENT Table
+
+CREATE TABLE STUDENT (
+    ROLLNO INT PRIMARY KEY,
+    NAME VARCHAR(50),
+    AGE INT
+);
+
+-- RESULT Table
+
+CREATE TABLE RESULT (
+    ROLLNO INT,
+    EXAM VARCHAR(50),
+    MARKS INT,
+    GRADE CHAR(2),
+    PRIMARY KEY (ROLLNO, EXAM),
+    FOREIGN KEY (ROLLNO) REFERENCES STUDENT(ROLLNO)
+);
+
+
+-----------------------------------------------------------------------------------
+
+3->
+
+Given Table Structure
+EMPNO	PROJECTNO	NO_OF_DAYS	CUSTOMERNAME
+Composite Primary Key: (EMPNO, PROJECTNO)
+
+there is partial dependency
+NO_OF_DAYS depends on both EMPNO and PROJECTNO
+CUSTOMERNAME depends only on PROJECTNO, not on the complete composite key
+the table is not in Second Normal Form (2NF)
+
+**NORMALIZE**
+
+Split the table into two tables
+
+EMPLOYEE_PROJECT Table -> EMPNO	   PROJECTNO	NO_OF_DAYS
+Primary Key:(EMPNO, PROJECTNO)
+
+PROJECT Table -> PROJECTNO   CUSTOMERNAME
+Primary Key:PROJECTNO
+
+code->
+
+CREATE TABLE PROJECT (
+    PROJECTNO INT PRIMARY KEY,
+    CUSTOMERNAME VARCHAR(50)
+);
+
+CREATE TABLE EMPLOYEE_PROJECT (
+    EMPNO INT,
+    PROJECTNO INT,
+    NO_OF_DAYS INT,
+    PRIMARY KEY (EMPNO, PROJECTNO),
+    FOREIGN KEY (PROJECTNO) REFERENCES PROJECT(PROJECTNO)
+);
+
+
+
+
+
+
+
